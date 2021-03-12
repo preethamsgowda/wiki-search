@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Input, Container } from "semantic-ui-react";
+import {
+  Input,
+  Container,
+  Card,
+  Divider,
+  Header,
+  Icon,
+} from "semantic-ui-react";
 import axios from "axios";
 
 const Wikipedia = () => {
@@ -27,10 +34,11 @@ const Wikipedia = () => {
             origin: "*",
             action: "query",
             list: "search",
-            format: "json",
             srsearch: usableTerm,
+            format: "json",
           },
         });
+        console.log("data: ", data);
         setResults(data.query.search);
         setFetching(false);
       })();
@@ -39,15 +47,25 @@ const Wikipedia = () => {
 
   const resultDivs = results.map((result, index) => {
     return (
-      <div key={result.pageid}>
-        <div>{result.title}</div>
-        <div>{result.snippet}</div>
-      </div>
+      <Card
+        fluid
+        key={result.pageid}
+        href={`http://en.wikipedia.org/?curid=${result.pageid}`}
+      >
+        <Card.Content header={result.title} />
+        <Card.Content extra>
+          <div dangerouslySetInnerHTML={{ __html: result.snippet }}></div>
+        </Card.Content>
+      </Card>
     );
   });
 
   return (
     <Container>
+      <Divider />
+      <Header as="h2">
+        Search <Icon fitted name="wikipedia w"></Icon>ikipedia here!
+      </Header>
       <Input
         fluid
         loading={fetching}
@@ -57,6 +75,7 @@ const Wikipedia = () => {
           setTerm(e.target.value);
         }}
       />
+      <Divider />
       <div>{resultDivs}</div>
     </Container>
   );
