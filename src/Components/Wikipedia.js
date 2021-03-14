@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Input,
-  Container,
-  Card,
-  Divider,
-  Header,
-  Icon,
-} from "semantic-ui-react";
+import { Input, Container, Divider, Header, Icon } from "semantic-ui-react";
 import axios from "axios";
 
 const Wikipedia = () => {
@@ -45,18 +38,24 @@ const Wikipedia = () => {
     }
   }, [usableTerm]);
 
-  const resultDivs = results.map((result, index) => {
+  const renderedResults = results.map((result, index) => {
     return (
-      <Card
-        fluid
-        key={result.pageid}
-        href={`http://en.wikipedia.org/?curid=${result.pageid}`}
-      >
-        <Card.Content header={result.title} />
-        <Card.Content extra>
-          <div dangerouslySetInnerHTML={{ __html: result.snippet }}></div>
-        </Card.Content>
-      </Card>
+      <React.Fragment key={result.pageid}>
+        <div className=" container result-card">
+          <div
+            className="p-10"
+            href={`http://en.wikipedia.org/?curid=${result.pageid}`}
+          >
+            <h3>{result.title}</h3>
+            <p>
+              <div
+                dangerouslySetInnerHTML={{ __html: result.snippet + " ..." }}
+              ></div>
+            </p>
+          </div>
+        </div>
+        <Divider />
+      </React.Fragment>
     );
   });
 
@@ -76,7 +75,8 @@ const Wikipedia = () => {
         }}
       />
       <Divider />
-      <div>{resultDivs}</div>
+      <div>{renderedResults}</div>
+      <Divider />
     </Container>
   );
 };
