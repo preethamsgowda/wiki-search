@@ -11,3 +11,4 @@ Built with React and Semantic-UI. It also uses Wikipedia Search API.
 
 ### TODO:
 + URL history
++ Localization
