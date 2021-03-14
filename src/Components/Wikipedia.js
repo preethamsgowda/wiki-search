@@ -42,17 +42,20 @@ const Wikipedia = () => {
     return (
       <React.Fragment key={result.pageid}>
         <div className=" container result-card">
-          <div
-            className="p-10"
+          <a
             href={`http://en.wikipedia.org/?curid=${result.pageid}`}
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            <h3>{result.title}</h3>
-            <p>
-              <div
-                dangerouslySetInnerHTML={{ __html: result.snippet + " ..." }}
-              ></div>
-            </p>
-          </div>
+            <div className="p-10">
+              <h3>{result.title}</h3>
+              <p>
+                <div
+                  dangerouslySetInnerHTML={{ __html: result.snippet + " ..." }}
+                ></div>
+              </p>
+            </div>
+          </a>
         </div>
         <Divider />
       </React.Fragment>
